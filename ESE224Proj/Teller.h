@@ -1,20 +1,37 @@
-#ifndef TELLER_H_INCLUDED
-#define TELLER_H_INCLUDED
+#pragma once
+#ifndef TELLER_H_
+#define TELLER_H_
+#include "Customer.h"
+class Teller
+{
+private:
+	bool available;
+	Customer customer;
 
-class Teller {
-public :
-    bool state = true;
+public:
+	string tellerID;
+	Teller() : available(true) {}
 
-public : Teller();
+	Teller(string name) : available(true) {
+		tellerID = name;
+	}
+	~Teller() {}
+	bool isFree() {
+		if (available) {
+			cout << "Teller: " << tellerID << " is free." << endl;
+			return true;
+		}
+		else if (customer.done()) {
+			cout <<"Teller: " << tellerID << " is finished with " << customer.customerID << endl;
+			available = true;
+		}
+		else { return available; }
+	}
 
-public : Teller(bool state);
-
-public : bool isBusy();
-
-public : void setState ();
-
-public : friend ostream& operator<<(ostream& os, const Teller& obj);
-
+	void addCustomer(const Customer &c) {
+		customer = c;
+		cout << tellerID << " is taking care of " << c.customerID << " who wants " << c.numOfTasks << " task(s)" << endl;
+		available = false;
+	}
 };
-
-#endif // TELLER_H_INCLUDED
+#endif
