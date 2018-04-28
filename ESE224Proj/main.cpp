@@ -8,7 +8,6 @@
 #include <vector>
 #include <iostream>
 #include <queue>
-#include <iomanip>
 #include <fstream>
 using namespace std;
 
@@ -18,10 +17,10 @@ void creatingCustomers(deque<Customer> &people, int numOfPeople, vector<string> 
 
 int main() {
 	int numOfTellers = 2;
-	int tStop = 7;			//User input maybe?
+	int tStop = 8;			//User input maybe?
 	int customersArriving;
 	//2 is the max amount of people that can arrive at the bank at each time step.	
-	int numOfPeople = (tStop * 2);	
+	int numOfPeople = (tStop * 2);
 	
 	vector<Teller> tellers;
 	vector<string> transactions;
@@ -38,13 +37,21 @@ int main() {
 		cout << "Input number of customers arriving (max 2): ";
 		cin >> customersArriving;
 		(customersArriving > 2) ? customersArriving = 2 : customersArriving;
-		cout << customersArriving << " customer(s) arrived.\n" 
-			<< "-------------------------------------" << endl;
-
+		cout << customersArriving << " customer(s) arrived. (";
+		//Output names of each customer arriving.
+		for (int i = 0; i < customersArriving; i++) {	
+			people[i].getCustomerName();
+			if (i < (customersArriving - 1)) {
+				cout << ", ";
+			}
+		}
+		cout << ")\n-------------------------------------" << endl;
+		//Put number of customers arriving in a queue.
 		for(int i = 0; i < customersArriving; i++){
 			line.push(people.front());
 			people.pop_front();
 		}
+		//Check each teller if they are available and assign them to a customer that's on line.
 		for (int i = 0; i < numOfTellers; i++) {
 			if (tellers[i].isFree() && !line.empty()) {
 				tellers[i].addCustomer(line.front());
@@ -99,3 +106,4 @@ void creatingTellers(int numOfTellers, vector<Teller> &tellers) {
 		tellers.push_back(Teller(tellerID));
 	}
 }
+

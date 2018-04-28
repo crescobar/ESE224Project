@@ -1,4 +1,4 @@
-﻿    #pragma once
+﻿#pragma once
 #ifndef CUSTOMER_H_
 #define CUSTOMER_H_
 #include <stdio.h>
@@ -8,14 +8,14 @@
 #include <vector>
 #include <iostream>
 using namespace std;
-/*
+/*----------------------------------------------------------------
 Each arriving customer has an ID, account number, account balance and a list of recent
 transactions, as its data members. It also has the amount of tasks it will want to be complete
 to be able to tell the teller.
-*/
+----------------------------------------------------------------*/
 class Customer {
 private:
-	friend class Teller; //Teller class can now access the private variables without methods
+	friend class Teller;	//Teller class can now access customer class private variables without methods
 	vector<string> eventType;
 	int numOfTasks;
 	string customerID;
@@ -26,33 +26,40 @@ private:
 public:
 	//The reason why theres a colon after constructor is its initialising 
 	//member variables before the body of the constructor executes.
-	//When creating a customer we need to give them a 
-	//accountBalance number, an ID, account number, and
-	//list of transactions made before they talk to the teller.
 	Customer(){}
 
 	Customer(string id, int accountNum, int balance) 
 	  :	numOfTasks(1 + (rand() % 3)), 
 		transactions(rand() % 7 + 2),
-		eventType({ "deposit", "withdraw", "printList" }) {
+		eventType({"deposit", "withdraw", "printList" }) {
 		customerID = id;
 		accountNumber = accountNum;
 		accountBalance = balance;
 	}
 
+	~Customer() {}
+
+	//Methods
+	void getCustomerName() {
+		cout << customerID;
+	}
+
 	void withdraw(double value) {
 		if (value > accountBalance) {
 			cout << customerID << " could not take out " << value << " from his account as it's higher then his account balance." << endl;
+			cout << endl;
 		}
 		else {
 			accountBalance = accountBalance - value;
 			cout << customerID << " withdrew $" << value << " from his account." << endl;
+			cout << endl;
 		}
 	}
 
 	void deposit(int value) {
 		accountBalance += value;
 		cout << customerID << " deposited $" << value << " to his account." << endl;
+		cout << endl;
 	}
 
 	void printList() {
@@ -60,9 +67,10 @@ public:
 		for (int i = 0; i < transactions.size(); i++) {
 			cout << transactions[i] << " " << endl;
 		}
+		cout << endl;
 	}
 
-	//Whatever is given in that list, the method will choose at random what goes inside this customers
+	//Whatever is given in input list, the method will choose at random what goes inside this customers
 	//own transaction list. 
 	void addTransactions(vector<string> &list) {
 		int size = transactions.size();
@@ -71,23 +79,28 @@ public:
 		}
 	}
 
-	//Where we handle each possible event that will occur. 
+	//Each customer will choose at random what task they want to initiate 
+	//until their number of tasks is equal to 0.
+
 	bool done() {
-		int n = eventType.size();
+
+		int n = eventType.size(); 
 		int choose = rand() % n;
-		if (eventType[choose] == "deposit") {
+		string choice = eventType[choose];
+
+		if (choice == "deposit") {
 			eventType.erase(eventType.begin() + choose);
 			deposit(rand() % accountBalance);
 		}
-		else if(eventType[choose] == "withdraw") {
+		if(choice == "withdraw") {
 			eventType.erase(eventType.begin() + choose);
 			withdraw(rand() % accountBalance);
 		}
-		else if (eventType[choose] == "printList") {
+		if (choice == "printList") {
 			eventType.erase(eventType.begin() + choose);
 			printList();
 		}
-		return --numOfTasks < 0;
+		return --numOfTasks == 0;
 	}
 
 };
