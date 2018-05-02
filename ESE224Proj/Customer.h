@@ -8,6 +8,9 @@
 #include <vector>
 #include <iostream>
 using namespace std;
+//Erik Bracamonte
+//Cristian Escobar
+
 /*----------------------------------------------------------------
 Each arriving customer has an ID, account number, account balance and a list of recent
 transactions, as its data members. It also has the amount of tasks it will want to be complete
@@ -30,7 +33,7 @@ public:
 
 	Customer(string id, int accountNum, int balance) 
 	  :	numOfTasks(1 + (rand() % 3)), 
-		transactions(rand() % 7 + 2),
+		transactions(4),
 		eventType({"deposit", "withdraw", "printList" }) {
 		customerID = id;
 		accountNumber = accountNum;
@@ -40,30 +43,32 @@ public:
 	~Customer() {}
 
 	//Methods
+
+	//This is used in main to call up what name the customer is arriving
 	void getCustomerName() {
 		cout << customerID;
 	}
 
 	void withdraw(double value) {
 		if (value > accountBalance) {
-			cout << customerID << " could not take out " << value << " from his account as it's higher then his account balance." << endl;
+			cout << customerID << " could not take out " << value << " from his account as it's higher then his account balance." << ". (" << (numOfTasks-1) << " task(s) remaining)" << endl;
 			cout << endl;
 		}
 		else {
 			accountBalance = accountBalance - value;
-			cout << customerID << " withdrew $" << value << " from his account." << endl;
+			cout << customerID << " withdrew $" << value << " from his account. Their balance is now $" << accountBalance << ". (" << (numOfTasks - 1) << " task(s) remaining)" << endl;
 			cout << endl;
 		}
 	}
 
 	void deposit(int value) {
 		accountBalance += value;
-		cout << customerID << " deposited $" << value << " to his account." << endl;
+		cout << customerID << " deposited $" << value << " to his account. Their balance is now $" << accountBalance << ". (" << (numOfTasks - 1) << " task(s) remaining)"<< endl;
 		cout << endl;
 	}
 
 	void printList() {
-		cout << customerID << " asked for his transaction history." << endl;
+		cout << customerID << " asked for his transaction history." << " (" << (numOfTasks - 1) << " task(s) remaining)" << endl;
 		for (int i = 0; i < transactions.size(); i++) {
 			cout << transactions[i] << " " << endl;
 		}
@@ -81,7 +86,6 @@ public:
 
 	//Each customer will choose at random what task they want to initiate 
 	//until their number of tasks is equal to 0.
-
 	bool done() {
 
 		int n = eventType.size(); 

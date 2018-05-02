@@ -1,3 +1,12 @@
+/*
+The goal of this project is to design and develop C++ code and algorithms to simulate a queue
+in a bank, serviced by several tellers. A second goal is to effectively employ object-oriented 
+design techniques, through appropriate use of classes, data structures and STANDARD TEMPLATE 
+LIBRARIES (STLs).
+*/
+
+//Erik Bracamonte
+//Cristian Escobar
 #define _crt_secure_no_warnings
 #include "Teller.h"
 #include "Customer.h"
@@ -16,8 +25,10 @@ void creatingTellers(int numOfTellers, vector<Teller> &tellers);
 void creatingCustomers(deque<Customer> &people, int numOfPeople, vector<string> &transactions);
 
 int main() {
-	int numOfTellers = 2;
-	int tStop = 8;			//User input maybe?
+	
+	int numOfTellers = 4;
+	int tStop = 15;
+
 	int customersArriving;
 	//2 is the max amount of people that can arrive at the bank at each time step.	
 	int numOfPeople = (tStop * 2);
@@ -25,7 +36,7 @@ int main() {
 	vector<Teller> tellers;
 	vector<string> transactions;
 	deque<Customer> people;	//Used to edit both front and ends of a vector.
-	queue<Customer> line; //Used to help take whats pushed in, and take out in order
+	deque<Customer> line; 
 	
 	//Creating our Tellers and Customers using loops. Each unique in name, account info, etc.
 	createTransactions(transactions);
@@ -36,8 +47,9 @@ int main() {
 		cout << "-------------------------------------\nTstep = " << t << endl;
 		cout << "Input number of customers arriving (max 2): ";
 		cin >> customersArriving;
-		(customersArriving > 2) ? customersArriving = 2 : customersArriving;
-		cout << customersArriving << " customer(s) arrived. (";
+		(customersArriving > 2 || customersArriving < 0) ? customersArriving = 2 : customersArriving;	//Make sure any input number greater then 2 or
+		cout << customersArriving << " customer(s) arrived. (";											//less than 2 is being forced as 2 instead.
+
 		//Output names of each customer arriving.
 		for (int i = 0; i < customersArriving; i++) {	
 			people[i].getCustomerName();
@@ -46,19 +58,29 @@ int main() {
 			}
 		}
 		cout << ")\n-------------------------------------" << endl;
+
 		//Put number of customers arriving in a queue.
 		for(int i = 0; i < customersArriving; i++){
-			line.push(people.front());
+			line.push_back(people.front());
 			people.pop_front();
 		}
-		//Check each teller if they are available and assign them to a customer that's on line.
+		//Check each teller if they are available and assign them to a customer that's on front of the line.
 		for (int i = 0; i < numOfTellers; i++) {
 			if (tellers[i].isFree() && !line.empty()) {
 				tellers[i].addCustomer(line.front());
-				line.pop();
+				line.pop_front();
 			}
 		}
-		cout << line.size() << " customer(s) are on line.\n" << endl;
+
+		//Output names of remaining customers whose waiting currently.
+		cout << line.size() << " customer(s) are on line. (";
+		for (int i = 0; i < line.size(); i++) {
+			line[i].getCustomerName();
+			if (i < (line.size() - 1)) {
+				cout << ", ";
+			}
+		}
+		cout <<")" << endl;
 	}
 	system("pause");
 	return 0;
@@ -89,9 +111,10 @@ This creates each unique customer with their own ID, bank account number, and th
 void creatingCustomers(deque<Customer> &people, int numOfPeople, vector<string> &transactions) {
 	for (int i = 1; i <= numOfPeople; i++) {
 		string personID = "C" + to_string(i);
-		people.push_back(Customer(personID, (111230823 + i), (rand() % 2000 + 300)));
+		people.push_back(Customer(personID, (111230826 + i), (rand() % 2000 + 300)));
 	}
-	//Simplify this and apply this to the code above
+	//Store transactions from a vector that was made by reading from a file and storing it into each customers
+	//personal transactions list.
 	for (int j = 0; j < people.size(); j++) {
 		people[j].addTransactions(transactions);
 	}
