@@ -3,8 +3,9 @@ Bank-Queue simulation and implementation.
 The goal of this project is to design and develop C ++ code and algorithms to simulate a queue in
 a bank, serviced by several tellers. A second goal is to effectively employ object-oriented design
 techniques, through appropriate use of classes, data structures and Standard Template Libraries
-(STLs). An amount of customers (0 to 2) arrrive at each timestep. 
+(STLs). 
 
+An amount of customers (0 to 2) arrrive at each timestep.
 Each customer wants to conduct 1, 2 or 3 tasks, either deposit a check, withdraw some cash, or print recent transactions from a list.
 
 
