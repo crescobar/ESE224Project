@@ -1,0 +1,50 @@
+Food Mart		-27.00
+Carnival Cinemas	-13.00
+Chai Shop		-9.00
+Trask Industries	-199.77
+Amazon			-161.49 
+Withdraw		-154.00
+Acme			-242.22 
+Amazon			-135.29 
+Lemon Computer		-141.21 
+Withdraw		-33.00
+Zorg Corporation	-103.64 
+Deposit			+175.00
+Food Mart		-75.00
+Acme			-179.8 
+Deposit			+125.00
+Amazon			-31.09 
+Deposit			+321.00
+Gas N Go		-27.83
+Zorg Corporation	-129.07 
+Gas N Go		-194.6 
+Zorg Corporation	-63.14 
+Trask Industries	-12.11
+Lemon Computer		-57.39
+Amazon			-17.34
+GeekGear		-28.27
+Gas N Go		-44.32
+Food Mart		-86.92
+Deposit			+655.00
+Acme			-102.18
+Gas N Go		-156.30
+Amazon			-207.21
+Carnival Cinemas	-39.00
+Gas N Go		-254.47
+Deposit			+120.00
+Weyland_Research	-201.11
+Geek Gear		-147.83
+Deposit			+345.00
+Trask Industries	-150.32
+Trask Industries	-112.86
+Gas N Go		-181.12
+Deposit			+900.00
+XYZ Inc			-15.86
+Amazon			-71.43
+Weyland Research	-86.76
+SuperMegaCorp		-45.33
+Food Mart		-103.49
+Acme			-218.38
+SuperMegaCorp		-212.04
+XYZ Inc			-203.33
+SuperMegaCorp		-62.66
